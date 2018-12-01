@@ -1,7 +1,6 @@
-/** @jsx h */
-const { h, render, Component } = preact;
+import React, { Component } from 'react';
 
-class AnchoringResults extends Component {
+export default class AnchoringResults extends Component {
 
   constructor(props) {
     super(props);
@@ -70,5 +69,3 @@ class AnchoringResults extends Component {
     )
   }
 }
-
-module.exports = AnchoringResults;

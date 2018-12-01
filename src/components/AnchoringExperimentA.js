@@ -1,7 +1,6 @@
-/** @jsx h */
-const { h, render, Component } = preact;
+import React, { Component } from 'react';
 
-const AnchoringExperimentA = function AnchoringExperimentA(props) {
+export default function AnchoringExperimentA(props) {
   return (
     <div class="container">
       <h1 class="title">
@@ -27,5 +26,3 @@ const AnchoringExperimentA = function AnchoringExperimentA(props) {
     </div>
   )
 }
-
-module.exports = AnchoringExperimentA;
