@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
+import axios from 'axios';
 
 export default class CaptchaCheck extends Component {
 
@@ -15,6 +16,13 @@ export default class CaptchaCheck extends Component {
     // and send it to the v2 api, to get a response to verify that challenge is real
     // then change text on submit button (or show/hide it)
     console.log("Captcha value: ", value);
+    axios.post(`/verifycaptcha/${value}`)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
     this.setState({
       captchaPassed: value,
     });

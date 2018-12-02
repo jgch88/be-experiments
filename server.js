@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const axios = require('axios');
 
 const app = express();
 
@@ -56,6 +57,36 @@ app.post('/experiment/:expName/:data', (req, res) => {
   estimatesForExptA.push(parseInt(req.body.guess));
   console.log(estimatesForExptA);
   res.json({ message: 'success!' });
+});
+
+const CAPTCHA_SECRET = `6LeHSX4UAAAAAEm6JDhWTLJGciuLyLTpc68E5EaK`;
+
+app.post('/verifycaptcha/:value', (req, res) => {
+  // once user has gotten a value from filling in google's reCAPTCHA
+  // verify the value against Google's API
+  console.log('Verifying reCAPTCHA with Google\'s API');
+  console.log(req.params.value);
+  axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${CAPTCHA_SECRET}&response=${req.params.value}`)
+  .then((response) => {
+    console.log(response.data);
+    if (response.data.success) {
+      res.json({ 
+        success: true,
+        message: 'captcha verified' 
+      });
+    } else {
+      res.json({ 
+        success: false,
+        message: 'captcha invalid' 
+      });
+    }
+  })
+  .catch((error) => {
+    console.log(error);
+    res.json({ message: 'error verifying captcha' });
+  });
+
+
 });
 
 const server = app.listen(PORT, () => {
